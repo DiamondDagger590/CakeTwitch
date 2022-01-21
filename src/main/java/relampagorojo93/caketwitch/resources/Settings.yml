@@ -1,0 +1,281 @@
+#--------------------------------------------------------------------------#
+#                                                                          #
+#                       _        _            _ _       _                  #
+#                      | |      | |          (_) |     | |                 #
+#              ___ __ _| | _____| |___      ___| |_ ___| |__               #
+#             / __/ _` | |/ / _ \ __\ \ /\ / / | __/ __| '_ \              #
+#            | (_| (_| |   <  __/ |_ \ V  V /| | || (__| | | |             #
+#             \___\__,_|_|\_\___|\__| \_/\_/ |_|\__\___|_| |_|             #
+#                                                                          #
+#  _                  _                                     _     ___ ___  #
+# | |_ _ _    ___ ___| |___ _____ ___ ___ ___ ___ ___ ___  |_|___| . |_  | #
+# | . | | |  |  _| -_| | .'|     | . | .'| . | . |  _| . | | | . |_  |_  | #
+# |___|_  |  |_| |___|_|__,|_|_|_|  _|__,|_  |___|_| |___|_| |___|___|___| #
+#     |___|                      |_|     |___|           |___|             #
+#                                                                          #
+#--------------------------------------------------------------------------#
+
+#---{File version}
+#
+# DON'T TOUCH THIS SECTION! You can move it, but you can't remove this sections
+# or change its values. This values are used to manage the different versions of
+# this file. New files with newer versions uses this part to check if the file is
+# new or old, and change the format to the new one.
+#
+#---
+
+Version: 1
+
+#---{MySQL}
+#
+# Use this section to connect CakeTwitch to your MySQL database. In case it's
+# disabled, CakeTwitch will use SQLite instead. Use another table prefix in
+# case you're gonna use a database shared with other plugins.
+#
+#---
+
+MySQL:
+  Hostname: localhost
+  Database: server
+  Username: admin
+  Protocol: 'jdbc:mysql:'
+  Password: admin
+  Table_prefix: ''
+  Parameters: sslMode=DISABLED&connectionTimeout=3000&socketTimeout=3000
+  Enable: false
+  Port: 3306
+
+#---{Hooks}
+#
+# Enable or disable integrations on CakeTwitch to use other plugins.
+#
+#---
+
+Hooks:
+  PlaceholderAPI: true
+  EIOpener: true
+
+#---{Inventories}
+#
+# Use this section to configure the interactions of the CakeTwitch inventories.
+# Configure it so people, using E or Esc, will get back to the previous
+# inventory if they came from one.
+#
+#---
+
+Inventories:
+  Open-previous-inventory-on-close: false
+
+#---{Twitch}
+#
+# Use this section to set the Twitch settings. You can choose if you want
+# the UUID verification to be enabled, blacklist channels that are bots or
+# banned accounts, grant privileges on register and more.
+#
+#---
+
+Twitch:
+  
+  #---{Registration}
+  #
+  # Choose here if you want the UUID verification to be enabled, blacklist
+  # channels, grant privileges on register, and which commands are gonna get
+  # executed once they have granted or revoked privileges.
+  #
+  #---
+  
+  Requires-UUID-verification: true
+  Blacklisted-channels:
+  - streamlabs
+  - nightbot
+  - streamelements
+  - moobot
+  - deepbot
+  - wizebot
+  - phantombot
+  - xanbot
+  Grant-streamer-privileges-on-register: false
+  Commands-after-granting-privileges:
+  - lp user %ign% parent add TwitchStreamer
+  Commands-after-revoking-privileges:
+  - lp user %ign% parent remove TwitchStreamer
+  
+  #---{Bots on start}
+  #
+  # Here you can define if you want bots to be loaded once the streamer
+  # joins, and which users are gonna be loaded and kept on the server
+  # from the start.
+  #
+  #---
+  
+  Start-bots-on-user-load: false
+  Load-users-on-start:
+  - darkpanda_73
+  - caronte7u7
+  - joshtified
+  - verdux
+  - morelaid
+  
+  #---{Updater}
+  #
+  # Define here the amount of minutes the updater will check for the
+  # information of all the currently loaded streamers.
+  #
+  #     ! The Updater requires the Twitch API to be used
+  #
+  #---
+  
+  Updater:
+    Update-timer-in-minutes: 1
+  
+  #---{API}
+  #
+  # Here you'll have to insert the information of your Twitch Bot to
+  # be able to use advanced features. You'll find here all the required
+  # information to create the bot and get its data:
+  #
+  #     https://gogs.darkpanda73.net/darkpanda73/CakeTwitch/wiki/Setup+your+plugin+-+Updater
+  #
+  #---
+  
+  API:
+    Client-id: ''
+    Client-secret: ''
+  
+  #---{EventSub}
+  #
+  # EventSub is the required system offered by Twitch to be able to get
+  # non-available events like followers and hype train through the conventional
+  # methods. This feature is experimental, and may have missing features to manage
+  # it properly or not work as expected.
+  #
+  #---
+  
+  EventSub:
+    Port: 80
+    Callback-URL: ''
+    Secret: ''
+    SSL:
+      Private-key: ''
+      Full-chain: ''
+
+#---{Resource Packs}
+#
+# Use this section to configure the available resource packs for the streamers.
+# Every resource pack uses the next format:
+#     '{Name in the inventory}:{Permission}:{URL to the file}'
+#
+#---
+
+Resource-packs:
+- '&eTwitch Resource Pack (Only cheers):caketwitch.rp.test:http://files.darkpanda73.net/Cake_Twitch_Integration.zip'
+
+#---{Commands}
+#
+# Here you'll be able to edit the information of all the commands,
+# allowing you to set custom names to them, and also for the
+# subcommands. Basically, the same information used to create this
+# commands internally, can be edited here.
+#
+#---
+
+Commands:
+  CakeTwitch:
+    Enable: true
+    Name: CakeTwitch
+    Aliases:
+    - ct
+    Description: Get all CakeTwitch commands
+    Permission: ''
+    Parameters: [command/help]
+    Subcommands:
+      Help:
+        Name: help
+        Aliases:
+        - h
+        Description: Get all the commands
+        Permission: ''
+        Parameters: [page]
+      Pack:
+        Name: pack
+        Aliases:
+        - p
+        Description: Open an inventory to get all the available Resource Packs
+        Permission: CakeTwitch.Pack
+      Register:
+        Name: register
+        Aliases:
+        - r
+        Description: Register a Twitch account into your Minecraft account
+        Permission: CakeTwitch.Twitch.Register
+        Parameters: [channel] [player]
+      Reload:
+        Name: reload
+        Aliases:
+        - r
+        Description: Reload the plugin
+        Permission: CakeTwitch.Reload
+      Streamers:
+        Name: streamers
+        Aliases:
+        - s
+        Description: Open an inventory to get all the online streamers
+        Permission: CakeTwitch.Streamers
+      Test:
+        Name: test
+        Aliases:
+        - t
+        Description: Test your configuration by simulating events
+        Permission: CakeTwitch.Test
+        Parameters: <channelpoints|subscriptions/subscriptionsgift/bits/raids>
+          <UUID|numerical value> [player]
+      Unregister:
+        Name: unregister
+        Aliases:
+        - ur
+        Description: Unregister a Twitch account from your Minecraft account
+        Permission: CakeTwitch.Twitch.Unregister
+        Parameters: [player]
+      SQL:
+        Name: sql
+        Aliases: []
+        Description: Get all CakeTwitch commands for the SQL management
+        Permission: CakeTwitch.Admin.SQL
+        Parameters: [command/help]
+        Subcommands:
+          ParseFromSQLite:
+            Name: parsefromsqlite
+            Aliases:
+            - pfs
+            Description: Parse all the content from the SQLite file to the configured MySQL
+              database (Only works if MySQL is disabled)
+            Permission: CakeTwitch.Admin.ParseFromSQLite
+          ParseFromMySQL:
+            Name: parsefrommysql
+            Aliases:
+            - pfm
+            Description: Parse all the content from the MySQL database to the configured SQLite
+              file (Only works if MySQL is enabled)
+            Permission: CakeTwitch.Admin.ParseFromMySQL
+      EventSub:
+        Name: eventsub
+        Aliases:
+        - es
+        Description: Get all CakeTwitch commands for the Twitch EventSub management
+        Permission: CakeTwitch.Admin.Twitch.EventSub
+        Parameters: [command/help]
+        Subcommands:
+          Information:
+            Name: information
+            Aliases:
+            - info
+            - i
+            Description: Get information of the actual status of the EventSub protocol
+            Permission: CakeTwitch.Admin.Twitch.EventSub.Information
+          Reset:
+            Name: reset
+            Aliases:
+            - r
+            Description: Remove all the subscriptions (This will make events from this protocol
+              stop working on every server until rejoin)
+            Permission: CakeTwitch.Admin.Twitch.EventSub.Reset

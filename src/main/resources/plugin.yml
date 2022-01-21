@@ -1,0 +1,7 @@
+main: relampagorojo93.CakeTwitch.CakeTwitch
+name: CakeTwitch
+author: relampagorojo93
+version: ${project.version}
+description: Give a new life to your server using twitch user interactions
+api-version: 1.18
+softdepend: [PlaceholderAPI, EzInvOpener]

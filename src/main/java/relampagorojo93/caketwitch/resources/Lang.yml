@@ -1,0 +1,120 @@
+#--------------------------------------------------------------------------#
+#                                                                          #
+#                       _        _            _ _       _                  #
+#                      | |      | |          (_) |     | |                 #
+#              ___ __ _| | _____| |___      ___| |_ ___| |__               #
+#             / __/ _` | |/ / _ \ __\ \ /\ / / | __/ __| '_ \              #
+#            | (_| (_| |   <  __/ |_ \ V  V /| | || (__| | | |             #
+#             \___\__,_|_|\_\___|\__| \_/\_/ |_|\__\___|_| |_|             #
+#                                                                          #
+#  _                  _                                     _     ___ ___  #
+# | |_ _ _    ___ ___| |___ _____ ___ ___ ___ ___ ___ ___  |_|___| . |_  | #
+# | . | | |  |  _| -_| | .'|     | . | .'| . | . |  _| . | | | . |_  |_  | #
+# |___|_  |  |_| |___|_|__,|_|_|_|  _|__,|_  |___|_| |___|_| |___|___|___| #
+#     |___|                      |_|     |___|           |___|             #
+#                                                                          #
+#--------------------------------------------------------------------------#
+
+#---{File version}
+#
+# DON'T TOUCH THIS SECTION! You can move it, but you can't remove this sections
+# or change its values. This values are used to manage the different versions of
+# this file. New files with newer versions uses this part to check if the file is
+# new or old, and change the format to the new one.
+#
+#---
+
+Version: 1
+
+#---{Prefix}
+#
+# Here you can define the prefix of the plugin. This prefix is added
+# before the message, adding an additional space between the prefix and
+# the message, ending up like:
+#
+#      prefix + " " + message
+#
+#---
+
+Prefix: &6&lCake&e&lTwitch &a&l>>&r&7
+
+#---{Message}
+#
+# Here you can define the messages on the plugin used when using
+# commands or showing messages on actionbars or titles.
+# The plugin can be incompleted on this part, and have some
+# missing messages for translations, but allowing full customization
+# instantly can be hard.
+#
+#---
+
+Message:
+  Reload: The plugin has been reloaded successfully.
+  Cancelled: Your action has been cancelled.
+  Console-denied: You can't use this command in console.
+  MySQL-connection-error: There was an error trying to connect to the MySQL database (Check
+    your MySQL configuration).
+  MySQL-disabled-error: You can't parse MySQL information to SQLite while you aren't using
+    MySQL.
+  MySQL-enabled-error: You can't parse SQLite information to MySQL while you're using MySQL.
+  Name-max-length-reached: The name of your channel exceeds the max of 25 characters.
+  Not-online: This player is not online.
+  Only-numbers: You must specify a number.
+  Parsed-data: Data has been parsed successfully.
+  Parsing-error: There was an error trying to parse the database information (Contact
+    with the developer).
+  SQLite-connection-error: There was an error trying to connect to the SQLite database (Contact
+    with the developer).
+  Stream-announcement: &8[&5Twitch&8] &7%ign% is actually streaming! Go check his stream!
+
+#---{GUI translations}
+#
+# Here you can modify the texts used on GUIs to your language.
+# Can be some missing translations but with time they'll be
+# added.
+#
+#---
+
+Twitch-users-GUI:
+  Title: Connected twitch users
+
+Resource-packs-GUI:
+  Title: Resource Packs
+
+Configuration-GUI:
+  Title: Configuration
+
+#---{Common GUI translations}
+#
+# Here you can modify the texts used on the default items on GUIs
+# like arrows or return buttons.
+#
+#---
+
+Common-GUI:
+  Left-arrow-name: &7&l<- &7Previous
+  Right-arrow-name: &7Next &7&l->
+  Return-name: &6Return
+
+#---{Help}
+#
+# Here you'll be able to modify the design used to show the
+# commands information when using the help command.
+#
+#---
+
+Help-command:
+  Left-arrow-available: &e«
+  Left-arrow-unavailable: &r«
+  Right-arrow-available: &e»
+  Right-arrow-unavailable: &r»
+  Header:
+  - ' '
+  - &c・。・。・。・。・。・。・。%left_arrow%&r %current_page%/%max_page% %right_arrow%&c。・。・。・。・。・。・。・
+  - ' '
+  Body:
+  - &6%command_usage%
+  - '  &8%command_description%'
+  Foot:
+  - ' '
+  - &c・。・。・。・。・。・。・。・。・。・。・。・。・。・。・。・。・

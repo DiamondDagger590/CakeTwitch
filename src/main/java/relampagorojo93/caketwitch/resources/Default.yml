@@ -1,0 +1,226 @@
+#--------------------------------------------------------------------------#
+#                                                                          #
+#                       _        _            _ _       _                  #
+#                      | |      | |          (_) |     | |                 #
+#              ___ __ _| | _____| |___      ___| |_ ___| |__               #
+#             / __/ _` | |/ / _ \ __\ \ /\ / / | __/ __| '_ \              #
+#            | (_| (_| |   <  __/ |_ \ V  V /| | || (__| | | |             #
+#             \___\__,_|_|\_\___|\__| \_/\_/ |_|\__\___|_| |_|             #
+#                                                                          #
+#  _                  _                                     _     ___ ___  #
+# | |_ _ _    ___ ___| |___ _____ ___ ___ ___ ___ ___ ___  |_|___| . |_  | #
+# | . | | |  |  _| -_| | .'|     | . | .'| . | . |  _| . | | | . |_  |_  | #
+# |___|_  |  |_| |___|_|__,|_|_|_|  _|__,|_  |___|_| |___|_| |___|___|___| #
+#     |___|                      |_|     |___|           |___|             #
+#                                                                          #
+#--------------------------------------------------------------------------#
+
+#---{Commands}
+#
+# Commands have a structure:
+#
+#   '[parameters] command'
+#
+# This are the following available parameters:
+#
+#     * executor: The ones that executes the commands. Can be:
+#         - @all: Everyone
+#         - @console: Console
+#         - @streamer: The same streamer
+#         - @viewers: The streamer and the viewers
+#         - player-ign: A defined player name
+#    * repeat: The amount of times it'll repeat. Can be:
+#         - @bits: The amount of bits will be the amount of times it'll repeat
+#         - @raid: The amount of viewers will be the amount of times it'll repeat
+#         - number: A normal static number
+#    * op: Allows the executors to execute this commands as OPs
+#    * delay-in: The amount of seconds before the command starts
+#    * delay-out: The amount of seconds to leave after the command is executed
+#    * queue: Add the command to a list where every command is executed one by one
+#
+# To add multiple parameters, you have to split them using ','
+#    
+#---
+
+#---{Permission}
+#
+# Users will only have access to this configurations if they have the defined
+# permission in here. If it's empty, everyone will be able to use it.
+#
+#---
+
+permission: "CakeTwitch.DefaultConfig"
+
+#---{Messages}
+#
+# Use this section to define the interactions with messages. You can set
+# which messages will be shown on chat or not. Also you can define the
+# format of the chat and the icon used to define someone as a subscriber.
+# You can allow the usage of colors. This means that you allow the Twitch chat
+# to use the MineCraft format to be colored in the MineCraft chat.
+# You can configure commands to be executed depending on the type of commands.
+#
+#---
+
+messages:
+  normal-messages-format: "&f[&dTwitch&f] %sub_icon%&e%user% &7> &f%msg%"
+  ritual-messages-format: "&cNew! &f[&dTwitch&f] %sub_icon%&e%user% &7> &f%msg%"
+  highlighted-messages-format: "&f[&dTwitch&f] %sub_icon%&e%user% &7> &f&l%msg%"
+  subscriber-icon: "&b<S> "
+  commands-after-normal-message: []
+  commands-after-subscriber-message: []
+  commands-after-ritual-message: []
+  commands-after-highlighted-message:
+  - "[executor=@console,queue] title @a times 20 100 20"
+  - "[executor=@console,queue] title @a subtitle {\"text\":\"%msg%\"}"
+  - "[executor=@console,delay-out=16,queue] title @a title {\"text\":\"%user%\"}"
+
+#---{Channel Points}
+#
+# Use this section to configure the actions to be done after redeeming
+# a reward. The name of every section inside this one is the UUID the
+# reward has. This UUID can be obtained with third party tools, or redeeming
+# the reward without having it defined in here. Being that the case, the
+# UUID will be shown on the console and you'll be able to copy it and use
+# it to configure the commands to be executed. If you want to stop this
+# warning to be shown, you'll have to register it anyway, but use the
+# next format:
+#
+# channelpoints:
+#   {uuid}: []
+#
+#---
+
+channelpoints:
+  00000000-0000-0000-0000-000000000000: 
+  - "[executor=@console] say hey :)"
+
+#---{Events}
+#
+# Events can use conditionals or not, meaning that they must achieve
+# some requirements to be executed. This conditions are optional, so you
+# can configure this sections and make them be executed no matter which
+# is the amount of bits or the months of a subscription. You'll find the
+# structure of the configuration on their respective sections.
+#
+#---
+
+#---{Conditions}
+#
+# Conditions uses a logical comparison to check if an event matches a group of commands.
+# This are the logical comparators you can use to check the values:
+#     * >: Greater
+#     * >= | =>: Greater or equal
+#     * =: Equal
+#     * <: Lower
+#     * <= | =<: Lower or equal
+#
+#---
+
+#---{Raids}
+#
+# raids:
+#   {name-of-section}:
+#     conditionals:
+#       raids-amount: ">100" //Amount of viewers
+#     effects:
+#     - "[executor=@console] say hi :D"
+#
+# Or
+#
+# raids:
+# - "[executor=@console] say hi :D"
+#
+#---
+
+raids:
+- "[executor=@console] tellraw @a [\"\",{\"text\":\"(!)\",\"color\":\"red\"},{\"text\":\" Thank you \"},{\"text\":\"%user%\",\"color\":\"gold\"},{\"text\":\" for the raid, welcome to the \"},{\"text\":\"%raid%\",\"color\":\"yellow\"},{\"text\":\" viewers!\"}]"
+
+#---{Subscriptions}
+#
+# subscriptions:
+#   {name-of-section}:
+#     conditionals:
+#       months-amount: ">100" //Amount of months of the subscription
+#     effects:
+#     - "[executor=@console] say hi :D"
+#     if-gifted: //Commands to be executed on gifted subscriptions
+#     - "[executor=@console] say hi but gifted :D"
+#
+# Or
+#
+# subscriptions:
+#   effects:
+#   - "[executor=@console] say hi :D"
+#   if-gifted:
+#   - "[executor=@console] say hi but gifted :D"
+#
+#---
+
+subscriptions:
+  1:
+    conditionals:
+      months-amount: "=1"
+    effects:
+    - "[executor=@all,op] summon minecraft:wolf ~ ~1 ~ {CustomName:\"\\"%sub%\\"\",CustomNameVisible:1,Owner:\"%ign%\"}"
+    - "[executor=@console] broadcast -n &c(!) &fThank you and welcome &e%sub%&f!"
+    if-gifted:
+    - "[executor=@all,op] summon minecraft:wolf ~ ~1 ~ {CustomName:\"\\"%donor%\\"\",CustomNameVisible:1,Owner:\"%ign%\"}"
+    - "[executor=@console] broadcast -n &c(!) &fThank you &6%donor% &ffor gifting a subscription to &e%sub%!"
+  2:
+    conditionals:
+      months-amount: "=3"
+    effects:
+    - "[executor=@all,op] summon minecraft:wolf ~ ~1 ~ {CustomName:\"\\"%sub%\\"\",CustomNameVisible:1,Owner:\"%ign%\"}"
+    - "[executor=@console] broadcast -n &c(!) &fThank you and welcome &e%sub%&f!"
+    if-gifted:
+    - "[executor=@all,op] summon minecraft:wolf ~ ~1 ~ {CustomName:\"\\"%donor%\\"\",CustomNameVisible:1,Owner:\"%ign%\"}"
+    - "[executor=@console] broadcast -n &c(!) &fThank you &6%donor% &ffor gifting a subscription to &e%sub%!"
+  3:
+    conditionals:
+      months-amount: "=6"
+    effects:
+    - "[executor=@all,op] summon minecraft:wolf ~ ~1 ~ {CustomName:\"\\"%sub%\\"\",CustomNameVisible:1,Owner:\"%ign%\"}"
+    - "[executor=@console] broadcast -n &c(!) &fThank you and welcome &e%sub%&f!"
+    if-gifted:
+    - "[executor=@all,op] summon minecraft:wolf ~ ~1 ~ {CustomName:\"\\"%donor%\\"\",CustomNameVisible:1,Owner:\"%ign%\"}"
+    - "[executor=@console] broadcast -n &c(!) &fThank you &6%donor% &ffor gifting a subscription to &e%sub%!"
+
+#---{bits}
+#
+# bits:
+#   {name-of-section}:
+#     conditionals:
+#       bits-amount: ">100" //Amount of bits donated
+#     effects:
+#     - "[executor=@console] say hi :D"
+#
+# Or
+#
+# bits:
+# - "[executor=@console] say hi :D"
+#
+#---
+
+bits:
+  1:
+    conditionals:
+      bits-amount: ">=5;<500"
+    effects:
+    - '[executor=@console] say &c(!) &fThank you &e%donor% &ffor the &d%bits% &dBits&f!'
+    - '[executor=@all,op] summon creeper ~ ~ ~ {CustomName:"\"%donor%\"",CustomNameVisible:1}'
+    - '[executor=@all,op] playsound minecraft:block.note_block.bell ambient %executor% ~ ~ ~'
+  2:
+    conditionals:
+      bits-amount: ">=500;<1000"
+    effects:
+    - "[executor=@console] broadcast -n &c(!) &fThank you &e%donor% &ffor the &d%bits% &dBits&f!"
+    - "[executor=@all,op] summon zombie ~ ~ ~ {CustomName:\"\\"%donor%\\"\",CustomNameVisible:1}"
+    - "[executor=@all,op] playsound minecraft:block.note_block.bell ambient %executor% ~ ~ ~"
+  3:
+    conditionals:
+      bits-amount: ">=1000"
+    effects:
+    - "[executor=@console] broadcast -n &c(!) &fThank you &e%donor% &ffor the &d%bits% &dBits&f!"
+    - "[executor=@all,op] give %executor% diamond 10"
+    - "[executor=@all,op] playsound minecraft:block.note_block.bell ambient %executor% ~ ~ ~"

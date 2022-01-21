@@ -1,0 +1,76 @@
+#--------------------------------------------------------------------------#
+#                                                                          #
+#                       _        _            _ _       _                  #
+#                      | |      | |          (_) |     | |                 #
+#              ___ __ _| | _____| |___      ___| |_ ___| |__               #
+#             / __/ _` | |/ / _ \ __\ \ /\ / / | __/ __| '_ \              #
+#            | (_| (_| |   <  __/ |_ \ V  V /| | || (__| | | |             #
+#             \___\__,_|_|\_\___|\__| \_/\_/ |_|\__\___|_| |_|             #
+#                                                                          #
+#  _                  _                                     _     ___ ___  #
+# | |_ _ _    ___ ___| |___ _____ ___ ___ ___ ___ ___ ___  |_|___| . |_  | #
+# | . | | |  |  _| -_| | .'|     | . | .'| . | . |  _| . | | | . |_  |_  | #
+# |___|_  |  |_| |___|_|__,|_|_|_|  _|__,|_  |___|_| |___|_| |___|___|___| #
+#     |___|                      |_|     |___|           |___|             #
+#                                                                          #
+#--------------------------------------------------------------------------#
+
+#---{Settings}
+#
+# Here you can specify the settings of the drops system. The delay is the time
+# between drops in seconds. You can specify if you only accept players that are
+# currently online on the server. You can specify if you wish the streamer
+# to be included as one of the players who can get a drop. Specify which
+# channels whos viewers will get drops on your server.
+#    
+#---
+
+Settings:
+  Enabled: false
+  Delay: 300
+  Only-online-players: true
+  Include-streamer: false
+  Twitch-channels:
+  - DarkPanda73
+  - Verdux
+  - Caronte7u7
+
+#---{Prizes}
+#
+# Specify the drops per channel. To define prizes per channel, define the name of
+# the section with the name of the channel. Use the 'Default' section to define
+# default prizes for all the channels. Chance is treated as tickets, meaning that
+# the ticket while dropping is the prize which, after adding its previous prizes chances,
+# result is higher than the ticket.
+# Ex:
+#   Prize1 - 50
+#   Prize2 - 5
+#   Prize3 - 1
+#
+# If the ticket is 54, can't be the first prize as its higher. After adding the previous
+# prizes to the second one, the result is 55, a higher number than the ticket, ending up
+# as the chosen prize.
+#
+# Use [] to define an empty list of commands.
+# 
+#---
+
+Prize-list:
+  DarkPanda73:
+    NoPrize:
+      Chance: 80
+      Commands: []
+    Prize1:
+      Chance: 1
+      Commands:
+      - "[executor=@console] msg %user-ign% You got 64 diamonds!"
+      - "[executor=@console] give %executor% diamond 64"
+  Default:
+    NoPrize:
+      Chance: 80
+      Commands: []
+    Prize1:
+      Chance: 1
+      Commands:
+      - "[executor=@console] msg %user-ign% You got 10 diamonds!"
+      - "[executor=@console] give %executor% diamond 10"
