@@ -10,23 +10,28 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 public class YAMLUtils {
-	public static void createYml(File f) {
-		try {
-			f.createNewFile();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	public static void createYml(File f, InputStream s) {
-		createYml(f);
-		try {
-			Writer w = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
-			Reader r = new InputStreamReader(s, StandardCharsets.UTF_8);
-			int i = 0;
-			while ((i = r.read()) != -1) w.write(i);
-			w.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public static void createYml(File f) {
+        try {
+            f.createNewFile();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createYml(File f, InputStream s) {
+        createYml(f);
+        try {
+            Writer w = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
+            Reader r = new InputStreamReader(s, StandardCharsets.UTF_8);
+            int i = 0;
+			while ((i = r.read()) != -1) {
+				w.write(i);
+			}
+            w.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

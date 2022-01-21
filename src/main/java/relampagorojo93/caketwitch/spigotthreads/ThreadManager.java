@@ -1,5 +1,7 @@
 package relampagorojo93.caketwitch.spigotthreads;
 
+import relampagorojo93.caketwitch.spigotthreads.objects.Thread;
+
 import java.util.ArrayList;
 import java.util.List;
 
