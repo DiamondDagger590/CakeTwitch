@@ -31,6 +31,9 @@ import relampagorojo93.caketwitch.relautils.shared.sql.objects.connectiondata.My
 import relampagorojo93.caketwitch.relautils.shared.sql.objects.connectiondata.SQLiteConnectionData;
 import relampagorojo93.caketwitch.spigotmessages.MessagesUtils;
 import relampagorojo93.caketwitch.spigotplugin.MainClass;
+import relampagorojo93.caketwitch.yamllib.YAMLUtils;
+
+import java.io.File;
 
 public class CakeTwitch extends MainClass {
 
@@ -39,7 +42,8 @@ public class CakeTwitch extends MainClass {
     // ---------------------------------------------------------------//
 
     public CakeTwitch() {
-        super(new FileModule(), new SQLModule(), new CommandsModule(), new ConfigModule(),
+        super(new FileModule(),
+            new SQLModule(), new CommandsModule(), new ConfigModule(),
             new CommandsQueueModule(), new PendingCommandsModule(), new HTTPModule(), new BasicWebQueryModule(),
             new WebQueryModule(), new EventSubModule(), new ResourcePacksModule(),
             new EmojisModule(), new StreamersModule(), new DropsModule());
@@ -52,14 +56,14 @@ public class CakeTwitch extends MainClass {
 
     @Override
     public boolean canLoad() {
-		if (CakeTwitchAPI.getSQL().isConnected() || CakeTwitchAPI.getSQL().connect(SettingBoolean.SQL.toBoolean()
-																					   ? new MySQLConnectionData(SettingString.PROTOCOL.toString(), SettingString.HOST.toString(),
-			SettingInt.PORT.toInt(), SettingString.DATABASE.toString(), SettingString.USERNAME.toString(),
-			SettingString.PASSWORD.toString(), SettingString.PARAMETERS.toString().split("&"))
-																					   : new SQLiteConnectionData(
-			String.valueOf(CakeTwitchAPI.getFile().PLUGIN_FOLDER.getPath()) + "/DB.sqlite"))) {
-			return true;
-		}
+        if (CakeTwitchAPI.getSQL().isConnected() || CakeTwitchAPI.getSQL().connect(SettingBoolean.SQL.toBoolean()
+                                                                                       ? new MySQLConnectionData(SettingString.PROTOCOL.toString(), SettingString.HOST.toString(),
+            SettingInt.PORT.toInt(), SettingString.DATABASE.toString(), SettingString.USERNAME.toString(),
+            SettingString.PASSWORD.toString(), SettingString.PARAMETERS.toString().split("&"))
+                                                                                       : new SQLiteConnectionData(
+            FileModule.PLUGIN_FOLDER.getPath() + "/DB.sqlite"))) {
+            return true;
+        }
         return false;
     }
 
@@ -83,6 +87,38 @@ public class CakeTwitch extends MainClass {
             Bukkit.getPluginManager().registerEvents(new InventoryEvents(), this);
             Bukkit.getPluginManager().registerEvents(new TwitchEvents(), this);
             Bukkit.getPluginManager().registerEvents(new ChatEvents(), this);
+
+            if (!FileModule.PLUGIN_FOLDER.exists()) {
+                FileModule.PLUGIN_FOLDER.mkdir();
+            }
+
+            if (!FileModule.CONFIGS_FOLDER.exists()) {
+                FileModule.CONFIGS_FOLDER.mkdir();
+            }
+
+            if (!new File("Configs/Default.yml").exists()) {
+                saveResource("Configs/Default.yml", false);
+            }
+            if (!FileModule.DROPS_FILE.exists()) {
+                saveResource("Drops.yml", false);
+            }
+            if (!FileModule.EMOJIS_FILE.exists()) {
+                saveResource("Emojis.yml", false);
+            }
+            if (!FileModule.LANG_FILE.exists()) {
+                saveResource("Lang.yml", false);
+            }
+            if (!FileModule.SETTINGS_FILE.exists()) {
+                saveResource("Settings.yml", false);
+            }
+            if (!FileModule.PENDINGCOMMANDS_FILE.exists()) {
+                saveResource("PendingCommands.json", false);
+            }
+
+            if (!FileModule.ACCESSTOKEN_FILE.exists()) {
+                YAMLUtils.createYml(FileModule.ACCESSTOKEN_FILE);
+            }
+
             new MetricsLite(this, 10083);
         }
         MessagesUtils.getMessageBuilder().createMessage(getPrefix() + "").sendMessage(Bukkit.getConsoleSender());

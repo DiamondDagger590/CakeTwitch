@@ -38,7 +38,7 @@ public class CakeTwitchAPI {
     }
 
     public static FileModule getFile() {
-        return (FileModule) plugin.getModule(FileModule.class);
+        return new FileModule();
     }
 
     public static StreamersModule getStreamers() {

@@ -91,7 +91,7 @@ public abstract class MainClass extends JavaPlugin {
         return firsttime;
     }
 
-    private boolean loadModule(PluginModule module) {
+    protected boolean loadModule(PluginModule module) {
         if (enabled.getOrDefault(module.getClass(), FALSE).booleanValue()) {
             return true;
         }
@@ -117,7 +117,7 @@ public abstract class MainClass extends JavaPlugin {
         return !module.optional() ? false : true;
     }
 
-    private boolean unloadModule(PluginModule module) {
+    protected boolean unloadModule(PluginModule module) {
         if (!enabled.getOrDefault(module.getClass(), FALSE).booleanValue()) {
             return true;
         }
@@ -143,7 +143,7 @@ public abstract class MainClass extends JavaPlugin {
         return !module.optional() ? false : true;
     }
 
-    private void execute(boolean load, boolean enable, boolean disable) {
+    protected void execute(boolean load, boolean enable, boolean disable) {
         if (disable) {
             beforeDisable();
             List<PluginModule> moduleslist = new ArrayList<>(modules.values());

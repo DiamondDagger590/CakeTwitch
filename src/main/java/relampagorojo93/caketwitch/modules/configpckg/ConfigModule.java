@@ -1,8 +1,8 @@
 package relampagorojo93.caketwitch.modules.configpckg;
 
 import org.bukkit.Bukkit;
-import relampagorojo93.caketwitch.api.CakeTwitchAPI;
 import relampagorojo93.caketwitch.modules.configpckg.configurations.Configuration;
+import relampagorojo93.caketwitch.modules.filepckg.FileModule;
 import relampagorojo93.caketwitch.modules.filepckg.messages.MessageString;
 import relampagorojo93.caketwitch.spigotmessages.MessagesUtils;
 import relampagorojo93.caketwitch.spigotplugin.LoadOn;
@@ -16,7 +16,17 @@ import java.util.List;
 public class ConfigModule extends PluginModule {
 
     public boolean load() {
-        for (File f : CakeTwitchAPI.getFile().CONFIGS_FOLDER.listFiles()) {
+
+        //Having to be extra safe....
+        if (!FileModule.PLUGIN_FOLDER.exists()) {
+            FileModule.PLUGIN_FOLDER.mkdir();
+        }
+
+        if (!FileModule.CONFIGS_FOLDER.exists()) {
+            FileModule.CONFIGS_FOLDER.mkdir();
+        }
+
+        for (File f : FileModule.CONFIGS_FOLDER.listFiles()) {
             try {
                 configs.put(f.getName().replace(".yml", ""), new Configuration(f));
             }

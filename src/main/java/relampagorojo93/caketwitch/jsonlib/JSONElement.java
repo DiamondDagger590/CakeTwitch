@@ -18,7 +18,7 @@ public abstract class JSONElement {
     }
 
     public JSONArray asArray() {
-        return null;
+        return new JSONArray();
     }
 
     public JSONObject asObject() {

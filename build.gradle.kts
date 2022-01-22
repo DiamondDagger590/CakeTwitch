@@ -16,7 +16,7 @@ apply {
 }
 
 //RECODE.RELEASE.PATCH.DEVELOPMENT
-version = "1.0.0.0-SNAPSHOT"
+version = "1.0.0.0"
 group = "relampagorojo93"
 
 java {

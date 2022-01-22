@@ -17,7 +17,7 @@ public class EIOAPI {
     }
 
     public static JavaPlugin getPlugin() {
-        return plugin;
+        return plugin.getPlugin();
     }
 
     public static UtilsModule getUtils() {
@@ -58,9 +58,4 @@ public class EIOAPI {
         return commands == null && plugin.getCommandsModule() != null ? commands = new CommandsAPI(plugin.getCommandsModule())
                    : commands;
     }
-
-    public static void reloadPlugin() {
-        plugin.reloadPlugin();
-    }
-
 }

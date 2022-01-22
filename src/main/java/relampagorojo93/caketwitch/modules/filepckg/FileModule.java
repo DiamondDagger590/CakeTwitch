@@ -26,7 +26,7 @@ public class FileModule extends PluginModule {
 		}
         if (!CONFIGS_FOLDER.exists()) {
             CONFIGS_FOLDER.mkdir();
-            YAMLUtils.createYml(new File(CONFIGS_FOLDER.getPath() + "/Default.yml"),
+            YAMLUtils.createYml(new File(CONFIGS_FOLDER.getPath() + "/Configs/Default.yml"),
                 CakeTwitchAPI.getPlugin().getResource("relampagorojo93/caketwitch/resources/Default.yml"));
         }
 		if (!SETTINGS_FILE.exists()) {
@@ -51,15 +51,12 @@ public class FileModule extends PluginModule {
 		}
         // Config generation
         try {
-            File newConfig = new File(SETTINGS_FILE.getPath() + ".new");
-            YAMLUtils.createYml(newConfig,
-                CakeTwitchAPI.getPlugin().getResource("relampagorojo93/caketwitch/resources/Settings.yml"));
+
             HashMap<String, String> parsing = new HashMap<>();
             parsing.put("SSL.Callback-URL", "Twitch.EventSub.Callback-URL");
             parsing.put("SSL.Secret", "Twitch.EventSub.Secret");
             parsing.put("SSL.Private-key", "Twitch.EventSub.SSL.Private-key");
             parsing.put("SSL.Full-chain", "Twitch.EventSub.SSL.Full-chain");
-            fileVersionCheck(SETTINGS_FILE, newConfig, parsing);
             YAMLFile settingsYaml = new YAMLFile(SETTINGS_FILE);
             for (SettingString str : SettingString.values()) {
                 Section nw = settingsYaml.getSection(str.getPath());
@@ -128,10 +125,7 @@ public class FileModule extends PluginModule {
             settingsYaml.saveYAML(SETTINGS_FILE);
             settingsYaml.reset();
             // Lang generation
-            File newLang = new File(LANG_FILE.getPath() + ".new");
-            YAMLUtils.createYml(newLang,
-                CakeTwitchAPI.getPlugin().getResource("relampagorojo93/caketwitch/resources/Lang.yml"));
-            fileVersionCheck(LANG_FILE, newLang, new HashMap<>());
+
             YAMLFile langYml = new YAMLFile(LANG_FILE);
             for (MessageString ms : MessageString.values()) {
                 Section nw = langYml.getSection(ms.getPath());
@@ -194,14 +188,15 @@ public class FileModule extends PluginModule {
         return true;
     }
 
-    public final File PLUGIN_FOLDER = new File("plugins/CakeTwitch");
-    public final File CONFIGS_FOLDER = new File(PLUGIN_FOLDER.getPath() + "/Configs");
-    public final File LANG_FILE = new File(PLUGIN_FOLDER.getPath() + "/Lang.yml");
-    public final File SETTINGS_FILE = new File(PLUGIN_FOLDER.getPath() + "/Settings.yml");
-    public final File EMOJIS_FILE = new File(PLUGIN_FOLDER.getPath() + "/Emojis.yml");
-    public final File DROPS_FILE = new File(PLUGIN_FOLDER.getPath() + "/Drops.yml");
-    public final File PENDINGCOMMANDS_FILE = new File(PLUGIN_FOLDER.getPath() + "/PendingCommands.json");
-    public final File ACCESSTOKEN_FILE = new File(PLUGIN_FOLDER.getPath() + "/AccessToken.txt");
+    //TODO get a better file management system cuz this be breaking
+    public static final File PLUGIN_FOLDER = new File("plugins/CakeTwitch");
+    public static final File CONFIGS_FOLDER = new File(PLUGIN_FOLDER.getPath() + "/Configs");
+    public static final File LANG_FILE = new File(PLUGIN_FOLDER.getPath() + "/Lang.yml");
+    public static final File SETTINGS_FILE = new File(PLUGIN_FOLDER.getPath() + "/Settings.yml");
+    public static final File EMOJIS_FILE = new File(PLUGIN_FOLDER.getPath() + "/Emojis.yml");
+    public static final File DROPS_FILE = new File(PLUGIN_FOLDER.getPath() + "/Drops.yml");
+    public static final File PENDINGCOMMANDS_FILE = new File(PLUGIN_FOLDER.getPath() + "/PendingCommands.json");
+    public static final File ACCESSTOKEN_FILE = new File(PLUGIN_FOLDER.getPath() + "/AccessToken.txt");
 
     private void fileVersionCheck(File oldfile, File newfile, HashMap<String, String> oldtonew) {
         try {

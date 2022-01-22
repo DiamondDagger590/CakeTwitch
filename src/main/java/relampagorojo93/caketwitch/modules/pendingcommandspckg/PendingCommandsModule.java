@@ -17,6 +17,7 @@ import relampagorojo93.caketwitch.jsonlib.JSONObject;
 import relampagorojo93.caketwitch.jsonlib.JSONParser;
 import relampagorojo93.caketwitch.modules.configpckg.configurations.commands.Command;
 import relampagorojo93.caketwitch.modules.configpckg.configurations.commands.ExecutableCommand;
+import relampagorojo93.caketwitch.modules.filepckg.FileModule;
 import relampagorojo93.caketwitch.modules.streamerspckg.objects.data.Streamer;
 import relampagorojo93.caketwitch.spigotplugin.LoadOn;
 import relampagorojo93.caketwitch.spigotplugin.PluginModule;
@@ -30,10 +31,10 @@ import java.util.UUID;
 public class PendingCommandsModule extends PluginModule {
     public boolean load() {
         try {
-            if (!(CakeTwitchAPI.getFile()).PENDINGCOMMANDS_FILE.exists()) {
+            if (!FileModule.PENDINGCOMMANDS_FILE.exists()) {
                 return true;
             }
-            for (JSONElement element : JSONParser.parseJson((CakeTwitchAPI.getFile()).PENDINGCOMMANDS_FILE).asArray()
+            for (JSONElement element : JSONParser.parseJson(FileModule.PENDINGCOMMANDS_FILE).asArray()
                 .getObjects()) {
                 if (element.isObject()) {
                     try {
