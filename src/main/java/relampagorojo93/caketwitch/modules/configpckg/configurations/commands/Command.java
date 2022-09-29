@@ -19,6 +19,8 @@ import relampagorojo93.caketwitch.relautils.bukkit.TasksUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Command {
     private Executor executor = Executor.CONSOLE;
@@ -224,33 +226,50 @@ public class Command {
 
     public static CommandStatus checkConditions(Command command, CakeTwitchEvent event) {
         Streamer user = CakeTwitchAPI.getStreamers().getStreamerByLogin(event.getUser().toLowerCase());
-        OfflinePlayer opl = null;
+        OfflinePlayer offlinePlayer = null;
+        Logger logger = CakeTwitchAPI.getPlugin().getLogger();
+
+        logger.log(Level.INFO, "Logging CakeTwitch event data for command: " + command.getCommand());
+        logger.log(Level.INFO, "Ignored Worlds: " + command.getIgnoredWorlds().stream().reduce(((s, s2) -> s + " " + s2)));
+        logger.log(Level.INFO, "Player for command: " + command.getPlayer());
+        logger.log(Level.INFO, "Queue?: " + command.queueMode());
+
         if (user != null) {
-            opl = Bukkit.getOfflinePlayer(user.getUniqueID());
+            offlinePlayer = Bukkit.getOfflinePlayer(user.getUniqueID());
         }
-        if (opl == null && command.mustBeRegistered()) {
+        if (offlinePlayer == null && command.mustBeRegistered()) {
+            logger.log(Level.INFO, "Command not registered.");
             return CommandStatus.NOTREGISTERED;
         }
-        if (command.mustBeConnected() && opl.isOnline()) {
+        if (command.mustBeConnected() && (offlinePlayer == null || offlinePlayer.isOnline())) {
+            logger.log(Level.INFO, "Player " + (offlinePlayer == null ? "null" : offlinePlayer.getName()) + " not connected.");
             return CommandStatus.NOTCONNECTED;
         }
         if (!command.getIgnoredWorlds().isEmpty() || !command.getForcedWorlds().isEmpty()) {
-            Player pl = opl != null ? opl.getPlayer() : null;
-            if (pl != null) {
-                if (!command.getForcedWorlds().isEmpty()) {
-                    if (!command.getForcedWorlds().contains(pl.getWorld().getName())) {
-                        return CommandStatus.INVALIDWORLD;
-                    }
+            Player player = offlinePlayer != null ? offlinePlayer.getPlayer() : null;
+            if (player != null) {
+                logger.log(Level.INFO, "Online player name: " + player.getName());
+                if (!command.getForcedWorlds().isEmpty() && !command.getForcedWorlds().contains(player.getWorld().getName())) {
+                    logger.log(Level.INFO, "Forced Worlds does not contain player.");
+                    return CommandStatus.INVALIDWORLD;
                 }
-                else if (!command.getIgnoredWorlds().isEmpty()
-                             && command.getIgnoredWorlds().contains(pl.getWorld().getName())) {
+                else if (!command.getIgnoredWorlds().isEmpty() && command.getIgnoredWorlds().contains(player.getWorld().getName())) {
+                    logger.log(Level.INFO, "Ignored Worlds contains player.");
                     return CommandStatus.INVALIDWORLD;
                 }
             }
+            else {
+                logger.log(Level.INFO, "Player is null/not online.");
+            }
+        }
+        else {
+            logger.log(Level.INFO, "No ignored or forced worlds.");
         }
         if (command.queueMode()) {
+            logger.log(Level.INFO, "Command is executing in queue mode.");
             return CommandStatus.QUEUE;
         }
+        logger.log(Level.INFO, "Command is executable.");
         return CommandStatus.EXECUTABLE;
     }
 

@@ -16,7 +16,7 @@ apply {
 }
 
 //RECODE.RELEASE.PATCH.DEVELOPMENT
-version = "1.0.0.0"
+version = "1.0.0.1"
 group = "relampagorojo93"
 
 java {
@@ -36,6 +36,7 @@ repositories {
     maven("https://repo.md-5.net/content/repositories/releases/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/repositories/snapshots/")
+    maven("https://oss.sonatype.org/content/repositories/central")
 }
 
 dependencies {
@@ -43,7 +44,7 @@ dependencies {
     val mongoVersion = "3.10.2"
     implementation("org.mongodb:mongo-java-driver:$mongoVersion")
 
-    val spigotVersion = "1.18.1-R0.1-SNAPSHOT"
+    val spigotVersion = "1.19.2-R0.1-SNAPSHOT"
     compileOnly("org.spigotmc:spigot:$spigotVersion")
 
     val papiVersion = "2.11.1"
