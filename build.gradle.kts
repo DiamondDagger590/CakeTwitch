@@ -43,7 +43,7 @@ dependencies {
     val mongoVersion = "3.10.2"
     implementation("org.mongodb:mongo-java-driver:$mongoVersion")
 
-    val spigotVersion = "1.18.1-R0.1-SNAPSHOT"
+    val spigotVersion = "1.19.2-R0.1-SNAPSHOT"
     compileOnly("org.spigotmc:spigot:$spigotVersion")
 
     val papiVersion = "2.11.1"
