@@ -229,20 +229,23 @@ public class Command {
         OfflinePlayer offlinePlayer = null;
         Logger logger = CakeTwitchAPI.getPlugin().getLogger();
 
+        logger.log(Level.INFO, "\n");
         logger.log(Level.INFO, "Logging CakeTwitch event data for command: " + command.getCommand());
         logger.log(Level.INFO, "Ignored Worlds: " + command.getIgnoredWorlds().stream().reduce(((s, s2) -> s + " " + s2)));
+        logger.log(Level.INFO, "Streamer UUID: " + user.getUniqueID());
         logger.log(Level.INFO, "Player for command: " + command.getPlayer());
         logger.log(Level.INFO, "Queue?: " + command.queueMode());
 
         if (user != null) {
             offlinePlayer = Bukkit.getOfflinePlayer(user.getUniqueID());
+            logger.log(Level.INFO, "Attempted to find offline player of UUID: " + user.getUniqueID());
         }
         if (offlinePlayer == null && command.mustBeRegistered()) {
-            logger.log(Level.INFO, "Command not registered.");
+            logger.log(Level.INFO, "Command not registered.\n");
             return CommandStatus.NOTREGISTERED;
         }
         if (command.mustBeConnected() && (offlinePlayer == null || offlinePlayer.isOnline())) {
-            logger.log(Level.INFO, "Player " + (offlinePlayer == null ? "null" : offlinePlayer.getName()) + " not connected.");
+            logger.log(Level.INFO, "Player " + (offlinePlayer == null ? "null" : offlinePlayer.getName()) + " not connected.\n");
             return CommandStatus.NOTCONNECTED;
         }
         if (!command.getIgnoredWorlds().isEmpty() || !command.getForcedWorlds().isEmpty()) {
@@ -250,26 +253,26 @@ public class Command {
             if (player != null) {
                 logger.log(Level.INFO, "Online player name: " + player.getName());
                 if (!command.getForcedWorlds().isEmpty() && !command.getForcedWorlds().contains(player.getWorld().getName())) {
-                    logger.log(Level.INFO, "Forced Worlds does not contain player.");
+                    logger.log(Level.INFO, "Forced Worlds does not contain player.\n");
                     return CommandStatus.INVALIDWORLD;
                 }
                 else if (!command.getIgnoredWorlds().isEmpty() && command.getIgnoredWorlds().contains(player.getWorld().getName())) {
-                    logger.log(Level.INFO, "Ignored Worlds contains player.");
+                    logger.log(Level.INFO, "Ignored Worlds contains player.\n");
                     return CommandStatus.INVALIDWORLD;
                 }
             }
             else {
-                logger.log(Level.INFO, "Player is null/not online.");
+                logger.log(Level.INFO, "Player of uuid " + user.getUniqueID() + " is null/not online.");
             }
         }
         else {
             logger.log(Level.INFO, "No ignored or forced worlds.");
         }
         if (command.queueMode()) {
-            logger.log(Level.INFO, "Command is executing in queue mode.");
+            logger.log(Level.INFO, "Command is executing in queue mode.\n");
             return CommandStatus.QUEUE;
         }
-        logger.log(Level.INFO, "Command is executable.");
+        logger.log(Level.INFO, "Command is executable.\n");
         return CommandStatus.EXECUTABLE;
     }
 

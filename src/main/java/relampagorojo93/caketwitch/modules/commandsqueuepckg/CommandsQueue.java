@@ -68,4 +68,8 @@ public class CommandsQueue {
         this.commands.clear();
     }
 
+    public int getCommandAmount() {
+        return this.commands.size();
+    }
+
 }
